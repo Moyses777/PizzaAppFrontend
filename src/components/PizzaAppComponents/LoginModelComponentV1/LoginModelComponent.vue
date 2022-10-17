@@ -48,19 +48,27 @@ export default defineComponent({
       this.isPassword = this.txtPassword.length < 5;
     },
     loginUser: async function () {
-      // if (this.isChecked) {
-      //   if (!this.isEmail && !this.isPassword) {
-      //     if (this.txtEmail != "" && this.txtPassword != "") {
-      //       let notification = new Notifications();
-      //       store.commit("LoginSession", {
-      //         Email: this.txtEmail,
-      //         Password: this.txtPassword,
-      //       });
-      //       await notification.ShowSessionLoadingMessage("login");
-      //       if (store.state.user.Email != "") router.push("/dashboard");
-      //     }
-      //   }
-      // }
+      if (this.isChecked) {
+        if (!this.isEmail && !this.isPassword) {
+          if (this.txtEmail != "" && this.txtPassword != "") {
+            // let notification = new Notifications();
+            // store.commit("LoginSession", {
+            //   Email: this.txtEmail,
+            //   Password: this.txtPassword,
+            // });
+            // await notification.ShowSessionLoadingMessage("login");
+            // if (store.state.user.Email != "") router.push("/dashboard");
+            let user = await fetch("https://localhost:44376/login", {
+              method: "GET",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            console.log(await user.json());
+          }
+        }
+      }
     },
   },
 });
