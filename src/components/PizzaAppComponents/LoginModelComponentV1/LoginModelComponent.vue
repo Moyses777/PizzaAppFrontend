@@ -1,12 +1,12 @@
 <template lang="pug">
 form.row.g-3.formregister
     .col-md-6
-      ui5-label.form-label(for='inputEmail4' required show-colon) Email
-      ui5-input#inputEmail4.form-control(type='Email' :class="{'inputError': isEmail}" show-clear-icon :value="txtEmail" @input="txtEmail = $event.target.value" @keyup="validateEmail()")
-      span(:class="{'spanError': isEmail}" v-if="isEmail") El correo esta mal ingresado!!!
+      ui5-label.form-label(for='inputEmail4' required show-colon) Nombre
+      ui5-input#inputEmail4.form-control(type='Text' :class="{'inputError': isName}" show-clear-icon :value="txtName" @input="txtName = $event.target.value" @keyup="validateName")
+      span(:class="{'spanError': isName}" v-if="isName") El nombre es corto!!!
     .col-md-6
       ui5-label.form-label(for='inputPassword4' required show-colon ) Password
-      ui5-input#inputPassword4.form-control(type='Password' :class="{'inputError': isPassword}" show-clear-icon :value="txtPassword" @input="txtPassword = $event.target.value" @keyup="validatePassword()")
+      ui5-input#inputPassword4.form-control(type='Password' :class="{'inputError': isPassword}" show-clear-icon :value="txtPassword" @input="txtPassword = $event.target.value" @keyup="validatePassword")
       span(:class="{'spanError': isPassword}", v-if="isPassword") La contraseña es muy corta!!!
     .col-12
       .form-check
@@ -19,7 +19,7 @@ form.row.g-3.formregister
 import { defineComponent } from "vue";
 //import { Notifications } from "@/tools/Utilities";
 import router from "@/router/index";
-import store from "@/store/index";
+// import store from "@/store/index";
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/Button.js";
@@ -27,30 +27,28 @@ import "@ui5/webcomponents/dist/Button.js";
 export default defineComponent({
   data: function () {
     return {
-      txtEmail: "",
+      txtName: "",
       txtPassword: "",
-      isEmail: false,
+      isName: false,
       isPassword: false,
       isChecked: false,
     };
   },
   methods: {
-    validateEmail: function () {
-      const validEmail =
-        "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
-      if (this.txtEmail == "") {
-        this.isEmail = false;
+    validateName: function () {
+      if (this.txtName == "") {
+        this.isName = false;
         return;
       }
-      this.isEmail = !this.txtEmail.match(validEmail);
+      this.isName = this.txtName.length < 5;
     },
     validatePassword: function () {
       this.isPassword = this.txtPassword.length < 5;
     },
     loginUser: async function () {
       if (this.isChecked) {
-        if (!this.isEmail && !this.isPassword) {
-          if (this.txtEmail != "" && this.txtPassword != "") {
+        if (!this.isName && !this.isPassword) {
+          if (this.txtName != "" && this.txtPassword != "") {
             // let notification = new Notifications();
             // store.commit("LoginSession", {
             //   Email: this.txtEmail,
@@ -59,11 +57,15 @@ export default defineComponent({
             // await notification.ShowSessionLoadingMessage("login");
             // if (store.state.user.Email != "") router.push("/dashboard");
             let user = await fetch("https://localhost:44376/login", {
-              method: "GET",
+              method: "POST",
               mode: "cors",
               headers: {
                 "Content-Type": "application/json",
               },
+              body: JSON.stringify({
+                name: this.txtName,
+                password: this.txtPassword,
+              }),
             });
             console.log(await user.json());
           }
