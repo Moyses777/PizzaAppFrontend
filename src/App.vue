@@ -1,6 +1,15 @@
 <template lang="pug">
-nav
-  router-link(to="/") Home
-  router-link(to="/about") About
+NavBarModel
 router-view
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import NavBarModel from "@/components/PizzaAppComponents/NavBarComponentV1/NavBarModel.vue";
+
+export default defineComponent({
+  components: {
+    NavBarModel,
+  },
+});
+</script>
