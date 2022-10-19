@@ -19,7 +19,7 @@ form.row.g-3.formregister
 import { defineComponent } from "vue";
 import { Notifications } from "@/tools/Utilities";
 import router from "@/router/index";
-// import store from "@/store/index";
+import store from "@/store/index";
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/Button.js";
@@ -60,11 +60,7 @@ export default defineComponent({
       if (this.isChecked) {
         if (!this.isName && !this.isPassword) {
           if (this.txtName != "" && this.txtPassword != "") {
-            // store.commit("LoginSession", {
-            //   Email: this.txtEmail,
-            //   Password: this.txtPassword,
-            // });
-            await Notifications.ShowSessionLoadingMessage(
+            const response = await Notifications.ShowSessionLoadingMessage(
               fetch("https://localhost:44376/login", {
                 method: "POST",
                 mode: "cors",
@@ -79,7 +75,14 @@ export default defineComponent({
               "Se ha logeado exitosamente!!!",
               "Nombre o Contraseña incorrectos!!!"
             );
-            // if (store.state.user.Email != "") router.push("/dashboard");
+            if (response) {
+              store.commit("LoginSession", {
+                name: this.txtName,
+              });
+              router.push("/dashboard");
+            }
+            this.txtName = "";
+            this.txtPassword = "";
           }
         }
       }
