@@ -18,6 +18,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: "dashboard",
     component: DashboardView,
+    children: [
+      {
+        path: "/dashboard/index",
+        name: "dashboardindex",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      },
+    ],
   },
   {
     path: "/about",
