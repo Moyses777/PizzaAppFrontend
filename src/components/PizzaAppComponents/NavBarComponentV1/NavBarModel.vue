@@ -40,9 +40,9 @@ nav.navbar.navbar-light.bg-light
       img.d-inline-block.align-text-top(src='@/assets/logo.png' alt='' width='30' height='24')
       |       Registro Contactos Mavi 
     div
-      RouterLink.container.navbarbutton(to="login" v-if="isLogged") Iniciar Sesión
-      RouterLink.container.navbarbutton(to="register" v-if="isLogged") Registro
-      RouterLink.container.navbarbutton(to="login" v-if="!isLogged" @click="closeSession") Cerrar Sesión
+      RouterLink.container.navbarbutton(to="/login" v-if="isLogged") Iniciar Sesión
+      RouterLink.container.navbarbutton(to="/register" v-if="isLogged") Registro
+      RouterLink.container.navbarbutton(to="/login" v-if="!isLogged" @click="closeSession") Cerrar Sesión
 </template>
 
 <style>
