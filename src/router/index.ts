@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import DashboardView from "@/views/DashboardView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import NotFoundView from "@/views/NotFoundView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -35,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: NotFoundView,
   },
 ];
 
