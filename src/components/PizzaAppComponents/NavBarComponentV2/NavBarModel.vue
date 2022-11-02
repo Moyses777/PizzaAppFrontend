@@ -1,10 +1,10 @@
 <template lang="pug">
 .snippet
-  ui5-shellbar#shellbar(primary-title='Corporate Portal' secondary-title='secondary title' notifications-count='99+' show-notifications='' show-product-switch='' show-co-pilot='')
-    ui5-avatar(slot='profile')
+  ui5-shellbar#shellbar(primary-title='Corporate Portal' secondary-title='secondary title' notifications-count='99+' show-notifications show-product-switch='' show-co-pilot='')
+    ui5-avatar(slot='profile' id="profile")
       img(src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
     img(slot='logo' src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
-    ui5-button(icon='nav-back' slot='startButton')
+    ui5-button#startButton(icon='menu' slot='startButton' @click="sliderbarshow")
     ui5-shellbar-item#disc(icon='disconnected' text='Disconnect')
     ui5-shellbar-item#call(icon='incoming-call' text='Incoming Calls' count='4')
     ui5-input(slot='searchField')
@@ -13,6 +13,39 @@
     ui5-li(slot='menuItems') Application 3
     ui5-li(slot='menuItems') Application 4
     ui5-li(slot='menuItems') Application 5
+
+  ui5-side-navigation#slidebar
+    ui5-side-navigation-item(text='Home' icon='home')
+    ui5-side-navigation-item(text='People' expanded='' icon='group')
+      ui5-side-navigation-sub-item(text='From My Team')
+      ui5-side-navigation-sub-item(text='From Other Teams')
+    ui5-side-navigation-item(text='Locations' icon='locate-me' selected='')
+    ui5-side-navigation-item(text='Events' icon='calendar')
+      ui5-side-navigation-sub-item(text='Local')
+      ui5-side-navigation-sub-item(text='Others')
+    ui5-side-navigation-item(slot='fixedItems' text='Useful Links' icon='chain-link')
+    ui5-side-navigation-item(slot='fixedItems' text='History' icon='history')
+
+  ui5-popover#notificationsPopover(style='max-width: 400px' placement-type='Bottom' horizontal-align='Right')
+    ui5-list(header-text='Notifications')
+      ui5-li-notification(show-close='' title-text='New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.')
+        | And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+        ui5-avatar(size='XS' slot='avatar')
+          img(src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
+        span(slot='footnotes') John Doe
+        span(slot='footnotes') 2 Days
+        ui5-notification-action#acceptBtnInPopover(icon='accept' text='Accept' slot='actions')
+        ui5-notification-action#rejectBtnInPopover(icon='message-error' text='Reject' slot='actions')
+      ui5-li-notification(show-close='' priority='Low' title-text='New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.')
+        | And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+        ui5-avatar(size='XS' slot='avatar')
+          img(src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
+        span(slot='footnotes') Monique Legrand
+        span(slot='footnotes') 2 Days
+        ui5-notification-action#acceptBtnInPopover(icon='accept' text='Accept' slot='actions')
+        ui5-notification-action#rejectBtnInPopover(icon='message-error' text='Reject' slot='actions')
+
+  
   ui5-popover#popover(placement-type='Bottom')
     .popover-header
       ui5-title(style='padding: 0.25rem 1rem 0rem 1rem') An Kimura
@@ -30,9 +63,55 @@
 import { defineComponent } from "vue";
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
+import "@ui5/webcomponents/dist/Popover.js";
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import "@ui5/webcomponents-icons/dist/AllIcons.js";
+import "@ui5/webcomponents-fiori/dist/SideNavigation.js";
+import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";
+import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";
+import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
+import "@ui5/webcomponents-fiori/dist/NotificationAction.js";
 
-export default defineComponent({});
+export default defineComponent({
+  mounted: function () {
+    const shellbar = document.getElementById("shellbar");
+    shellbar?.addEventListener("profile-click", function (event) {
+      const popover = document.getElementById("popover");
+      // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+      popover?.showAt(event.detail.targetRef);
+    });
+
+    shellbar?.addEventListener("notifications-click", function (event) {
+      const PopoverNotifications = document.getElementById(
+        "notificationsPopover"
+      );
+      // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+      PopoverNotifications?.showAt(event.detail.targetRef);
+    });
+  },
+  methods: {
+    sliderbarshow: function () {
+      const slider = document.querySelector("#slidebar");
+      if (slider?.hasAttribute("collapsed")) {
+        slider.removeAttribute("collapsed");
+        return;
+      }
+      slider?.setAttribute("collapsed", "");
+    },
+  },
+});
 </script>
+
+<style>
+ui5-shellbar::part(root) {
+  padding-left: 0.5rem !important;
+}
+
+#slidebar {
+  position: absolute !important;
+  display: block !important;
+  background: white;
+  z-index: 1;
+}
+</style>
