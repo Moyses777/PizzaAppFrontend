@@ -45,7 +45,42 @@
         ui5-notification-action#acceptBtnInPopover(icon='accept' text='Accept' slot='actions')
         ui5-notification-action#rejectBtnInPopover(icon='message-error' text='Reject' slot='actions')
 
+  ui5-popover#CallPopover(style='max-width: 400px' placement-type='Bottom' horizontal-align='Right')
+    ui5-list(header-text='Telephonic Calls')
+      ui5-li-notification(show-close='' title-text='New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.')
+        | And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+        ui5-avatar(size='XS' slot='avatar')
+          img(src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
+        span(slot='footnotes') John Doe
+        span(slot='footnotes') 2 Days
+        ui5-notification-action#acceptBtnInPopover(icon='accept' text='Accept' slot='actions')
+        ui5-notification-action#rejectBtnInPopover(icon='message-error' text='Reject' slot='actions')
+      ui5-li-notification(show-close='' priority='Low' title-text='New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.')
+        | And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+        ui5-avatar(size='XS' slot='avatar')
+          img(src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
+        span(slot='footnotes') Monique Legrand
+        span(slot='footnotes') 2 Days
+        ui5-notification-action#acceptBtnInPopover(icon='accept' text='Accept' slot='actions')
+        ui5-notification-action#rejectBtnInPopover(icon='message-error' text='Reject' slot='actions')
   
+  ui5-popover#productswitch-popover(placement-type='Bottom')
+    ui5-product-switch
+      ui5-product-switch-item(title-text='Home' subtitle-text='Central Home' icon='home')
+      ui5-product-switch-item(title-text='Analytics Cloud' subtitle-text='Analytics Cloud' icon='business-objects-experience')
+      ui5-product-switch-item(title-text='Catalog' subtitle-text='Ariba' icon='contacts')
+      ui5-product-switch-item(title-text='Guided Buying' icon='credit-card')
+      ui5-product-switch-item(title-text='Strategic Procurement' icon='cart-3')
+      ui5-product-switch-item(title-text='Travel & Expense' subtitle-text='Concur' icon='flight')
+      ui5-product-switch-item(title-text='Vendor Management' subtitle-text='Fieldglass' icon='shipping-status')
+      ui5-product-switch-item(title-text='Human Capital Management' icon='customer')
+      ui5-product-switch-item(title-text='Sales Cloud' subtitle-text='Sales Cloud' icon='sales-notification')
+      ui5-product-switch-item(title-text='Commerce Cloud' subtitle-text='Commerce Cloud' icon='retail-store')
+      ui5-product-switch-item(title-text='Marketing Cloud' subtitle-text='Marketing Cloud' icon='marketing-campaign')
+      ui5-product-switch-item(title-text='Service Cloud' icon='family-care')
+      ui5-product-switch-item(title-text='Customer Data Cloud' icon='customer-briefing')
+      ui5-product-switch-item(title-text='S/4HANA' icon='batch-payments')
+
   ui5-popover#popover(placement-type='Bottom')
     .popover-header
       ui5-title(style='padding: 0.25rem 1rem 0rem 1rem') An Kimura
@@ -72,6 +107,8 @@ import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";
 import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationAction.js";
+import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";
+import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";
 
 export default defineComponent({
   mounted: function () {
@@ -88,6 +125,25 @@ export default defineComponent({
       );
       // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
       PopoverNotifications?.showAt(event.detail.targetRef);
+    });
+
+    const calls = document.getElementById("call");
+    calls?.addEventListener("click", function (event) {
+      const PopoverNotifications = document.getElementById("CallPopover");
+      // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+      PopoverNotifications?.showAt(event.detail.targetRef);
+    });
+
+    shellbar?.addEventListener("product-switch-click", function (event) {
+      const popoverproduct = document.getElementById("productswitch-popover");
+      // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+      if (popoverproduct?.opened) {
+        // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+        popoverproduct?.close();
+        return;
+      }
+      // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+      popoverproduct?.showAt(event.detail.targetRef);
     });
   },
   methods: {
