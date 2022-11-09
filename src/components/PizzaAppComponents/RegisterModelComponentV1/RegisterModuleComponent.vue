@@ -212,13 +212,13 @@ export default defineComponent({
 }
 .formregister {
   width: 80%;
-  margin: auto;
+  margin: auto !important;
   padding: 5em;
   border: black 1px solid;
   border-radius: 50px;
   box-shadow: black 3px 3px 3px;
-  margin-top: 2em;
-  margin-bottom: 2em;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
 }
 .form-control {
   padding: 0 !important;

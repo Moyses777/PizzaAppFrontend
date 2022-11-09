@@ -9,6 +9,9 @@ export default createStore({
     LoginSession: function (state, user: any) {
       state.user = { name: user.name };
     },
+    CloseSession: function (state) {
+      state.user = { name: "" };
+    },
   },
   actions: {},
   modules: {},

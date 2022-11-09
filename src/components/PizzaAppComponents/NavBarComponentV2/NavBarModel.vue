@@ -1,20 +1,20 @@
 <template lang="pug">
 .snippet
-  ui5-shellbar#shellbar(primary-title='Corporate Portal' secondary-title='secondary title' notifications-count='99+' show-notifications show-product-switch='' show-co-pilot='')
+  ui5-shellbar#shellbar(primary-title='Corporate Portal' secondary-title='secondary title' notifications-count='99+' show-co-pilot='')
     ui5-avatar(slot='profile' id="profile")
       img(src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
     img(slot='logo' src='../../../../public/img/icons/android-chrome-maskable-192x192.png')
     ui5-button#startButton(icon='menu' slot='startButton' @click="sliderbarshow")
-    ui5-shellbar-item#disc(icon='disconnected' text='Disconnect')
-    ui5-shellbar-item#call(icon='incoming-call' text='Incoming Calls' count='4')
+    ui5-shellbar-item#disc(icon='disconnected' text='Disconnect' v-if="!isLogged")
+    ui5-shellbar-item#call(icon='incoming-call' text='Incoming Calls' count='4' v-if="!isLogged")
     ui5-input(slot='searchField')
-    ui5-li(slot='menuItems') Application 1
-    ui5-li(slot='menuItems') Application 2
-    ui5-li(slot='menuItems') Application 3
-    ui5-li(slot='menuItems') Application 4
-    ui5-li(slot='menuItems') Application 5
+    ui5-li(slot='menuItems') Ventas
+    ui5-li(slot='menuItems') Credito
+    ui5-li(slot='menuItems') Ventas Mayoreo
+    ui5-li(slot='menuItems') Credito Mayoreo
+    ui5-li(slot='menuItems') Compras
 
-  ui5-side-navigation#slidebar
+  ui5-side-navigation#slidebar(v-if="!isLogged")
     ui5-side-navigation-item(text='Home' icon='home')
     ui5-side-navigation-item(text='People' expanded='' icon='group')
       ui5-side-navigation-sub-item(text='From My Team')
@@ -83,19 +83,23 @@
 
   ui5-popover#popover(placement-type='Bottom')
     .popover-header
-      ui5-title(style='padding: 0.25rem 1rem 0rem 1rem') An Kimura
+      ui5-title(style='padding: 0.25rem 1rem 0rem 1rem; font-size: 18px;') Opciones del sistema: 
     .popover-content
       ui5-list(separators='None')
-        ui5-li(icon='sys-find') App Finder
-        ui5-li(icon='settings') Settings
-        ui5-li(icon='edit') Edit Home Page
-        ui5-li(icon='sys-help') Help
-        ui5-li(icon='log') Sign out
+        ui5-li(icon='sap-icon://account' v-if="isLogged" @click="toLogin") Iniciar Sesión
+        ui5-li(icon='sap-icon://add-employee' v-if="isLogged" @click="toRegister") Registrarse
+        ui5-li(icon='sys-find' v-if="!isLogged") App Finder
+        ui5-li(icon='settings' v-if="!isLogged") Settings
+        ui5-li(icon='edit' v-if="!isLogged") Edit Home Page
+        ui5-li(icon='sys-help' v-if="!isLogged") Help
+        ui5-li(icon='log' v-if="!isLogged" @click="toLogout") Sign out
   
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import router from "@/router/index";
+import store from "@/store/index";
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents/dist/Popover.js";
@@ -111,6 +115,11 @@ import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";
 import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";
 
 export default defineComponent({
+  data: function () {
+    return {
+      isLogged: store.state.user.name == "",
+    };
+  },
   mounted: function () {
     const shellbar = document.getElementById("shellbar");
     shellbar?.addEventListener("profile-click", function (event) {
@@ -154,6 +163,35 @@ export default defineComponent({
         return;
       }
       slider?.setAttribute("collapsed", "");
+    },
+    toLogin: function () {
+      router.push("/login");
+    },
+    toRegister: function () {
+      router.push("/register");
+    },
+    toLogout: function () {
+      store.commit("CloseSession");
+      router.push("/login");
+    },
+  },
+  watch: {
+    $route: function (to, from) {
+      this.isLogged = store.state.user.name == "";
+      const shellbar = document.getElementById("shellbar");
+      !this.isLogged
+        ? shellbar?.setAttribute("show-notifications", "")
+        : shellbar?.removeAttribute("show-notifications");
+      !this.isLogged
+        ? shellbar?.setAttribute("show-product-switch", "")
+        : shellbar?.removeAttribute("show-product-switch");
+
+      const calls = document.getElementById("call");
+      calls?.addEventListener("click", function (event) {
+        const PopoverNotifications = document.getElementById("CallPopover");
+        // @ts-expect-error @typescript-eslint/ban-ts-comment - It exists but the compiler doesn't recognize it
+        PopoverNotifications?.showAt(event.detail.targetRef);
+      });
     },
   },
 });
