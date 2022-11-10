@@ -13,7 +13,7 @@ ui5-flexible-column-layout#fcl
       ui5-button(design='Transparent' icon='add')
       ui5-button#fullscreenMidColumn(design='Transparent' icon='full-screen')
       ui5-button#closeMidColumn(icon='decline' design='Transparent')
-    ui5-list#col2list(header-text='Employees')
+    ui5-list#col2list(:header-text='Employees')
       ui5-li 10 ich portable
 
   div(slot='endColumn')
@@ -32,6 +32,11 @@ import { defineComponent } from "vue";
 import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";
 
 export default defineComponent({
+  data: function () {
+    return {
+      Employees: "Moises :V",
+    };
+  },
   mounted: function () {
     const fcl = document.getElementById("fcl");
     const col1list = document.getElementById("col1list");
