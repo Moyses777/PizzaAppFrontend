@@ -157,4 +157,8 @@ export default defineComponent({
   margin: 0.8em;
   justify-content: space-between;
 }
+
+.ui5-fcl-root {
+  height: 95vh !important;
+}
 </style>
