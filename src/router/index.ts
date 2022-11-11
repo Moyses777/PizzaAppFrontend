@@ -3,6 +3,7 @@ import DashboardView from "@/views/DashboardView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import CreateProduct from "@/views/CreateProduct.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,8 +24,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboard/index",
     name: "dashboardindex",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    component: CreateProduct,
   },
   {
     path: "/about",
