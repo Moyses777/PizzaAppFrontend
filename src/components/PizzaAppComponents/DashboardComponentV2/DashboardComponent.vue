@@ -37,11 +37,11 @@ ui5-flexible-column-layout#fcl
               b {{ changeF.price }}
       .productInfo(style='align-self: start')
         ui5-title(level='H5' ui5-title='') Rating:
-        ui5-rating-indicator#productRating(accessible-name='Hello World' value='1' ui5-rating-indicator='')
+        ui5-rating-indicator#productRating(accessible-name='Hello World' ui5-rating-indicator='' :value="3.5")
       span
     
-    ui5-list#col2list(:header-text='changeF.name')
-      ui5-li 10 ich portable
+    ui5-list#col2list(header-text='similar products')
+      ui5-li 20 ich portable
 
   div(slot='endColumn')
     .colHeader
