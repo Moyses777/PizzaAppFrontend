@@ -3,7 +3,8 @@ import DashboardView from "@/views/DashboardView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
-import CreateProduct from "@/views/CreateProduct.vue";
+import CreateProductView from "@/views/CreateProduct.vue";
+import ProductsView from "@/views/ProductsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,7 +25,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboard/index",
     name: "dashboardindex",
-    component: CreateProduct,
+    component: CreateProductView,
+  },
+  {
+    path: "/dashboard/products",
+    name: "dashboardproducts",
+    component: ProductsView,
   },
   {
     path: "/about",

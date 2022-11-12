@@ -17,8 +17,8 @@
   ui5-side-navigation#slidebar(v-if="!isLogged")
     ui5-side-navigation-item(text='Home' icon='home' @click="toHome")
     ui5-side-navigation-item(text='Products' expanded='' icon='group')
-      ui5-side-navigation-sub-item(text='Upload new product' @click="toUploadFile")
-      ui5-side-navigation-sub-item(text='From Other Teams')
+      ui5-side-navigation-sub-item(text='Upload New Product' @click="toUploadFile")
+      ui5-side-navigation-sub-item(text='Products Table' @click="toProductsTable")
     ui5-side-navigation-item(text='Locations' icon='locate-me' selected='')
     ui5-side-navigation-item(text='Events' icon='calendar')
       ui5-side-navigation-sub-item(text='Local')
@@ -179,6 +179,9 @@ export default defineComponent({
     },
     toUploadFile: function () {
       router.push("/dashboard/index");
+    },
+    toProductsTable: function () {
+      router.push("/dashboard/products");
     },
   },
   watch: {
