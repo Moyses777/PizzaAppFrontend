@@ -5,6 +5,7 @@ import RegisterView from "@/views/RegisterView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import CreateProductView from "@/views/CreateProduct.vue";
 import ProductsView from "@/views/ProductsView.vue";
+import SellView from "@/views/SellView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,6 +32,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard/products",
     name: "dashboardproducts",
     component: ProductsView,
+  },
+  {
+    path: "/dashboard/pointofsale",
+    name: "dashboardpointofsale",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: SellView,
   },
   {
     path: "/about",

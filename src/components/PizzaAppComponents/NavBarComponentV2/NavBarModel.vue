@@ -19,7 +19,7 @@
     ui5-side-navigation-item(text='Products' expanded='' icon='group')
       ui5-side-navigation-sub-item(text='Upload New Product' @click="toUploadFile")
       ui5-side-navigation-sub-item(text='Products Table' @click="toProductsTable")
-    ui5-side-navigation-item(text='Locations' icon='locate-me' selected='')
+    ui5-side-navigation-item(text='Locations' icon='locate-me' selected='' @click="toPointOfSale")
     ui5-side-navigation-item(text='Events' icon='calendar')
       ui5-side-navigation-sub-item(text='Local')
       ui5-side-navigation-sub-item(text='Others')
@@ -182,6 +182,9 @@ export default defineComponent({
     },
     toProductsTable: function () {
       router.push("/dashboard/products");
+    },
+    toPointOfSale: function () {
+      router.push("/dashboard/pointofsale");
     },
   },
   watch: {
