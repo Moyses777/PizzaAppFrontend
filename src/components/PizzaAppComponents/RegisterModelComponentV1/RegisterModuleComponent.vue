@@ -51,6 +51,7 @@ import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents/dist/CheckBox.js";
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/Select.js";
+import UserService from "@/services/UserService";
 
 export default defineComponent({
   data: function () {
@@ -102,26 +103,19 @@ export default defineComponent({
             this.txtState != "" &&
             this.txtZip != 0
           ) {
-            // store.commit("AddUserRegistered", {
-            //   Email: this.txtEmail,
-            //   Password: this.txtPassword,
-            // });
             try {
+              const Service = new UserService({
+                Name: this.txtName,
+                LastName: this.txtLastname,
+                Password: this.txtPassword,
+                Telephone: this.txtTelephone,
+                Address: this.txtAddress,
+                City: this.txtCity,
+                PostalCode: this.txtZip.toString(),
+                State: this.txtState,
+              });
               await Notifications.ShowSessionLoadingMessage(
-                fetch("https://localhost:44376/register", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                  },
-                  body: JSON.stringify({
-                    id: 1,
-                    name: this.txtName,
-                    lastname: this.txtLastname,
-                    password: this.txtPassword,
-                    telephone: this.txtTelephone,
-                    rangePermitions: 1,
-                  }),
-                }),
+                Service.registerUser(),
                 "Se ha registrado con exito!!!",
                 "Hubo algun error en el registro!!!"
               );

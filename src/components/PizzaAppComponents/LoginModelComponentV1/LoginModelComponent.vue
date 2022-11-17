@@ -23,6 +23,7 @@ import store from "@/store/index";
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/Button.js";
+import UserService from "@/services/UserService";
 
 export default defineComponent({
   data: function () {
@@ -60,18 +61,12 @@ export default defineComponent({
       if (this.isChecked) {
         if (!this.isName && !this.isPassword) {
           if (this.txtName != "" && this.txtPassword != "") {
+            const Service = new UserService({
+              Name: this.txtName,
+              Password: this.txtPassword,
+            });
             const response = await Notifications.ShowSessionLoadingMessage(
-              fetch("https://localhost:44376/login", {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  name: this.txtName,
-                  password: this.txtPassword,
-                }),
-              }),
+              Service.loginUser(),
               "Se ha logeado exitosamente!!!",
               "Nombre o Contraseña incorrectos!!!"
             );
