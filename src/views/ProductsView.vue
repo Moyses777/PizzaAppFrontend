@@ -1,9 +1,14 @@
 <template lang="pug">
-h2(class="text-center") Aqui va una tabla XD
+TableComponentVue
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import TableComponentVue from "@/components/PizzaAppComponents/TableComponentV1/TableComponent.vue";
 
-export default defineComponent({});
+export default defineComponent({
+  components: {
+    TableComponentVue,
+  },
+});
 </script>

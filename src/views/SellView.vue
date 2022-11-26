@@ -1,5 +1,6 @@
 <template lang="pug">
-SearchProductInputComponentVue
+.container.mkcenter
+  SearchProductInputComponentVue
 </template>
 
 <script lang="ts">
@@ -12,3 +13,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.mkcenter {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+  flex-direction: row;
+  justify-content: center;
+}
+</style>
