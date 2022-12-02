@@ -48,7 +48,7 @@ docker network create {} -> te crea una nueva red {["nombre de nueva red"]}
 
 docker network rm {} -> elimina alguna red ya creada {["nombre de la red a eliminar"]}
 
-docker build -t miapp:1.0 . -> otra manera de construir un contenedor -t ["nombre de contenedor:version de contenedor"] {".", "este indica de donde va sacar la app, en este caso . porque estamos apuntando a la misma carpeta donde estamos."}
+docker build -t miapp:1.0 . -> otra manera de construir una imagen -t ["nombre de la imagen:version de imagen"] {".", "este indica de donde va sacar la app para la imagen que se creara, en este caso . porque estamos apuntando a la misma carpeta donde estamos. en este caso apunta a este mismo proyecto para que se cree la imagen. Este proyecto sera la imagen."}
 
 ```
 
