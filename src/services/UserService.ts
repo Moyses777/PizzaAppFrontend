@@ -18,7 +18,7 @@ export default class UserService {
   }
 
   async registerUser(): Promise<Response> {
-    return await fetch("https://localhost:44376/Register", {
+    return await fetch("https://localhost:58691/Register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -28,7 +28,7 @@ export default class UserService {
   }
 
   async loginUser(): Promise<Response> {
-    return await fetch("https://localhost:44376/login", {
+    return await fetch("https://localhost:58691/login", {
       method: "POST",
       mode: "cors",
       headers: {

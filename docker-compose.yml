@@ -5,4 +5,8 @@ services:
     ports:
       - "8080:8080"
     links:
-      - backendservice
+      - backendpizzapp
+  backendpizzapp:
+    image: backendpizzapp
+    ports: 
+      - 55727:443
